@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 11:14:54 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/07 13:13:49 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/07 14:08:43 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	read_file(char *file_name)
 			count_x++;
 			i++;
 		}
-		if (buf[i] == '\n')
-			count_y++;
 		if (count_x == 4)
 		{
 			write(1, &buf[i - 4], 1);
@@ -43,16 +41,24 @@ void	read_file(char *file_name)
 			write(1, &buf[i - 2], 1);
 			write(1, &buf[i - 1], 1);
 			write(1, "\n", 1);
-			count = 0;
+			count_x = 0;
+			count_y++;
 		}
-		else 
-	//	{
-			//write(1, "Error", 5);
-	//		count = 0;
-	//	}
+		else if (count_x != 0)
+		{
+			count_x = 0;
+			count_y++;
+			write(1, "Error_x\n", 8);
+		}
+		if (buf[i] == '\n' && (buf[i + 1] == '\n' || buf[i + 1] == '\0'))
+		{
+			if (!(count_y == 4))
+				write(1, "Error_y\n", 8);
+			count_y = 0;
+		}
 		i++;
 	}
-	printf("%d\n", count_y);
+//	printf("%d\n", count_y);
 //	printf("%d\n", i);
 //	printf("%d\n", count);
 	close(fd);
