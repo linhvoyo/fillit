@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 11:14:54 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/07 14:08:43 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/07 14:20:00 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	read_file(char *file_name)
 	int count_y = 0;
 	while(buf[i])
 	{
+		if (!(buf[i] == '.' || buf[i] == '#' || buf[i] == '\n'))
+			write(1, "Error_char\n", 11);
 		while (buf[i] == '.' || buf[i] == '#')
 		{
 			count_x++;
@@ -52,6 +54,7 @@ void	read_file(char *file_name)
 		}
 		if (buf[i] == '\n' && (buf[i + 1] == '\n' || buf[i + 1] == '\0'))
 		{
+			write(1, &buf[i], 1);
 			if (!(count_y == 4))
 				write(1, "Error_y\n", 8);
 			count_y = 0;
