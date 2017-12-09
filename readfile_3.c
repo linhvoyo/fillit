@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 11:14:54 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/08 21:48:59 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/08 19:28:04 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,23 @@
 #include <stdio.h>
 
 
-//int	line_shape(int *tet, int n)
-//{
-//	int i;
-//	int count;
-
-//	i = 0;
-//	count = 0;
-	
-//	while (tet[i] && i < 3)
-//	{
-//		if ((tet[i] == tet[i + 1] - (tet[2] - tet[1])) && n == 4)
-//			count++;
-//		if ((tet[i] == tet[i + 1] - 4 || tet[i] == tet[i + 1] - 1) && n == 3)
-//			count++;
-//	i++;
-//	}
-//	return (count >= n - 1);	
-//}
-//
-
-int	line_shape(int *tet)
+int	line_shape(int *tet, int n)
 {
 	int i;
+	int count;
 
 	i = 0;
+	count = 0;
+	
 	while (tet[i] && i < 3)
 	{
-		if (!((tet[i] == tet[i + 1] - (tet[2] - tet[1]))))
-			return (0);
-		i++;
+		if ((tet[i] == tet[i + 1] - (tet[2] - tet[1])) && n == 4)
+			count++;
+		if ((tet[i] == tet[i + 1] - 4 || tet[i] == tet[i + 1] - 1) && n == 3)
+			count++;
+	i++;
 	}
-	return (1);
+	return (count == n - 1);	
 }
 
 int square_shape(int *tet)
@@ -59,10 +44,31 @@ int square_shape(int *tet)
 	return (1);
 }
 
-int z_shape(int *tet)
+//void num_in_a_row(int *tet)
+//{
+//	int num[3];
+//	int j;
+//	int i;
+
+//	j = 0;
+//	i = 0;
+//	while (tet[i] && i < 3)
+//	{
+//		if (tet[i] == tet[i + 1] - 4 || tet[i] == tet[i + 1] - 1)
+//			num[j++] = tet[i];
+//		i++;
+		
+//	}
+//}
+
+int t_shape(int *tet)
 {
-	if ((tet[1] - tet[0] == tet[3] - tet[2]) && (tet[2] - tet[1] <= 4))
+	if (line_shape(tet,3) && (tet[2] - tet[1] == 1))
+	{
+//		printf("possibly 3 in a row\n");
+//		num_in_a_row(tet);
 		return (1);
+	}
 	return (0);
 }
 
@@ -71,7 +77,7 @@ int shape_check(int *tet)
 	int i;
 
 	i = 0;
-	if (line_shape(tet))
+	if (line_shape(tet, 4))
 	{
 		printf("line\n");
 		return (1);
@@ -81,9 +87,9 @@ int shape_check(int *tet)
 		printf("square\n");
 		return (2);
 	}
-	if (z_shape(tet))
+	if (t_shape(tet))
 	{
-		printf("z_shape\n");
+		printf("t_shape\n");
 		return (3);
 	}
 	else
