@@ -178,7 +178,11 @@ int	**read_file(char *file_name, int **all_pieces)
 			count_y++;
 		}
 		else if (count_x != 0)
+		{
+			count_x = 0;
+			count_y++;
 			return ((int**)0);
+		}
 		if (buf[i] == '\n' && (buf[i + 1] == '\n' || buf[i + 1] == '\0'))
 		{
 			if (!(count_y == 4))
@@ -198,7 +202,10 @@ int	**read_file(char *file_name, int **all_pieces)
 					return ((int**)0);
 			}
 			else if (count_hash != 0)
+			{
+				count_hash = 0;
 				return ((int**)0);
+			}
 			tet_count++;
 		}
 		i++;
@@ -213,6 +220,7 @@ int main(int argc, char **argv)
 {
 	int **arr;
 	arr = malloc(sizeof(**arr) * 26);
+
 	int j = 0;
 	while (j < 26)
 		arr[j++] = malloc(sizeof(int) * 4);
