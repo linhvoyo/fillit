@@ -61,11 +61,13 @@ int shape_check(int *tet)
 
 int	**read_file(char *file_name, int **all_pieces)
 {
+	int		fd;
 	int		ret;
 	char	buf[BUF_SIZE];
 	int		tet[4];
 
-	ret = read(open(file_name, O_RDONLY), buf, BUF_SIZE);
+	fd = open(file_name, O_RDONLY);
+	ret = read(fd, buf, BUF_SIZE);
 
 	int i = 0;
 	int count_x = 0;
@@ -118,31 +120,10 @@ int	**read_file(char *file_name, int **all_pieces)
 		}
 		i++;
 	}
-	close(open(file_name, O_RDONLY));
+	close(fd);
 
 	return (all_pieces);
  }
-
-
-int num_tet(char *file_name)
-{
-	int		ret;
-	char	buf[BUF_SIZE];
-	int i;
-	int tet_count;
-
-	ret = read(open(file_name, O_RDONLY), buf, BUF_SIZE);
-	i = 0;
-	tet_count = 0;
-	while(buf[i])
-	{
-		if (buf[i] == '\n' && (buf[i + 1] == '\n' || buf[i + 1] == '\0'))
-			tet_count++;
-		i++;
-	}
-	close(open(file_name, O_RDONLY));
-	return (tet_count);
-}
 
 
 int main(int argc, char **argv)
@@ -159,9 +140,12 @@ int main(int argc, char **argv)
 		arr = read_file(argv[1], arr);
 		if (arr == 0)
 			write(1, "Error\n", 6);
-		//generate_board(num_tet(argv[1]));
-
-		fillit(arr, num_tet(argv[1]));
+		int i = 0;
+		while (i < 4)
+		{
+			printf("%d %d %d %d \n", arr[i][0], arr[i][1], arr[i][2], arr[i][3]);
+			i++;
+		}
 	//	arr = read_file(argv[1], arr);
 	//	printf("%i\n", arr[0]);
 	//	printf("%i\n", arr[1]);
