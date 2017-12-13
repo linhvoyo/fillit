@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 11:12:14 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/12 22:09:07 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/12 21:17:28 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ char    *ft_strnew(size_t size)
 	return (str);
 }
 
-char	*generate_board(int size)
+char	*generate_board(int num_tet)
 {
 
 	char *str;
-	str = ft_strnew((size * size));
+	str = ft_strnew((num_tet * 4));
 	return (str);
 }
 
@@ -68,28 +68,15 @@ int	fill_piece(char *str, int *tet, char c)
 	return (0);
 }
 
-void	print_board(char *str, int board_size)
+void	print_board(char *str)
 {
 	printf("\n\n\n");
 	int i = 0;
-	while (i < (board_size * board_size))
+	while (i < 16)
 		printf("%c", str[i++]);
 	printf("\n");
 }
 
-void pb(char *str, int board_size)
-{
-	 printf("\n");
-	 int i = 0;
-	 while (i < (board_size * board_size))
-	 {
-		if (i % board_size == 0)
-			printf("\n");
-	 	printf("%c", str[i]);
-		i++;
-	 } 
-	printf("\n\n");
-}
 
 void print_combo(int *num, int n)
 {
@@ -102,7 +89,7 @@ void print_combo(int *num, int n)
 	printf("\n");
 }
 
-int	generate_combo(int **arr, int num_pieces, int board_size)
+int	generate_combo(int **arr, int num_pieces)
 {
 	int num[26];
 	int temp;
@@ -110,10 +97,7 @@ int	generate_combo(int **arr, int num_pieces, int board_size)
 	int j;
 	char *str; 
 
-	str = generate_board(board_size);
-
-	print_board(str, board_size);
-
+	str = generate_board(num_pieces);
 	i = -1;
 	while (++i < num_pieces)
 		num[i] = i;
@@ -128,11 +112,7 @@ int	generate_combo(int **arr, int num_pieces, int board_size)
 			num[i] = num[i + 1];
 			num[i + 1] = temp;
 			if (fill_board(str, arr, num_pieces, num))
-			{
-				print_board(str, board_size);
-				pb(str, board_size);
-				return (1);
-			}
+				print_board(str);
 			i++;
 		}
 		j++;
@@ -171,14 +151,17 @@ int fill_board(char *str, int **arr, int num_pieces, int *num)
 
 void fillit(int **arr, int num_pieces)
 {
-//	char *str;
+	char *str;
 	int i = 0;
 	while (i < 4)
 	{
 		printf("%d %d %d %d \n", arr[i][0], arr[i][1], arr[i][2], arr[i][3]);
 		i++;
 	}
+
+	puts(" ");
 //	str = generate_board(num_pieces);
+
 //	print_board(str);
 	//if ((index = piece_fit(str, arr[0])))
 //	fill_piece(str, arr[3], 'A' + 3);
@@ -190,12 +173,8 @@ void fillit(int **arr, int num_pieces)
 
 //	print_board(str);
 
-
-//	int board_size = 4;
-
-//	str = generate_board(num_pieces);
-//	print_board(str, board_size);
-//	puts(" ");
+	str = generate_board(num_pieces);
+	print_board(str);
 
 //	int num[4];
 //	num[0] = 3;
@@ -206,16 +185,6 @@ void fillit(int **arr, int num_pieces)
 //	fill_board(str, arr, num_pieces, num);
 //	print_board(str);
 
-//	generate_combo(arr, num_pieces, 5);
-	
-	i = 0;
-	while (i < 26)
-	{
-		if(!(generate_combo(arr, num_pieces, i)))
-				i++;
-		else
-			break ;
-	}
-
-
+	generate_combo(arr, num_pieces);
 }
+

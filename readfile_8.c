@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 11:14:54 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/12 22:03:52 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/11 10:59:10 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,4 +142,45 @@ int num_tet(char *file_name)
 	}
 	close(open(file_name, O_RDONLY));
 	return (tet_count);
+}
+
+
+int main(int argc, char **argv)
+{
+	int **arr;
+	arr = malloc(sizeof(**arr) * 26);
+	int j;
+
+	j = 0;
+	while (j < 26)
+		arr[j++] = malloc(sizeof(int) * 4);
+	if (argc == 2)
+	{
+		arr = read_file(argv[1], arr);
+		if (arr == 0)
+			write(1, "Error\n", 6);
+		//generate_board(num_tet(argv[1]));
+
+		fillit(arr, num_tet(argv[1]));
+	//	arr = read_file(argv[1], arr);
+	//	printf("%i\n", arr[0]);
+	//	printf("%i\n", arr[1]);
+	//	printf("%i\n", arr[2]);
+	//	printf("%i\n", arr[3]);
+//		printf("%d\n", read_file(argv[1])[1]);
+	//	read_file(argv[1]);
+		//int j = 0;
+	//	while (i[j])
+	//		printf("%d,", i[j++]);
+	}
+	else
+	{
+		int i;
+		i = 0;
+		char usage[] = "usage: ./fillit file.fillit\n";
+		while (usage[i])
+			i++;
+		write(1, &usage, i);
+	}
+	return (0);
 }
