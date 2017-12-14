@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 11:14:54 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/13 18:51:14 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/13 17:40:38 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ int num_links(int *tet)
 
 int shape_check(int *tet)
 {
+	int i;
+
+	i = 0;
 	if (num_links(tet) < 2)
 		return (0);
 	if (line_shape(tet))
@@ -56,63 +59,88 @@ int shape_check(int *tet)
 	return (0);
 }
 
-
-int analyze_shape(int **all_pieces, int *tet)
-{
-	if (!(iters.count_y == 4))
-		return (0);
-	iters.count_y = 0;
-	if (iters.count_hash == 4)
-	{
-		iters.count_hash = 0;
-		if (shape_check(tet) != 0)
-			{
-				all_pieces[iters.tet_count][0] = tet[0];
-				all_pieces[iters.tet_count][1] = tet[1];
-				all_pieces[iters.tet_count][2] = tet[2];
-				all_pieces[iters.tet_count][3] = tet[3];
-				iters.shapes_arr[iters.tet_count] = shape_check(tet);
-			}
-		else
-			return (0);
-	}
-	else if (iters.count_hash != 4)
-		return (0);
-	iters.tet_count++;
-	return (1);
-}
-
-void analyze_x(int *tet, int i)
-{
-	tet[iters.count_hash] = i - iters.tet_count - iters.count_y -  (20 * iters.tet_count) + 1;
-	iters.count_hash++;
-}
-
 int	**read_file(char *file_name, int **all_pieces)
 {
-	FILE_VARS;
-	if(!(ret = read(open(file_name, O_RDONLY), buf, 4096)))
+	int		ret;
+	char	buf[BUF_SIZE];
+	int		tet[4];
+
+	if(!(ret = read(open(file_name, O_RDONLY), buf, BUF_SIZE)))
 		return ((int**)0);
-	while(buf[++i])
+
+	int i = 0;
+	int count_x = 0;
+	int count_y = 0;
+	int count_hash = 0;
+	int tet_count = 0;
+
+	while(buf[i])
 	{
 		if (!(buf[i] == '.' || buf[i] == '#' || buf[i] == '\n'))
 			return ((int**)0);
 		while (buf[i] == '.' || buf[i] == '#')
 		{
 			if (buf[i] == '#')
-				analyze_x(tet, i);
-			ADD_X_ADD_I;
+			{
+				tet[count_hash] = i - tet_count - count_y -  (20 * tet_count) + 1;
+				count_hash++;
+			}
+			count_x++;
+			i++;
 		}
-		if (iters.count_x == 4)
+		if (count_x == 4)
 		{
-			RESET_X_ADD_Y;
+			count_x = 0;
+			count_y++;
 		}
-		else if ((iters.count_x != 0))
+		else if (count_x != 0)
 			return ((int**)0);
 		if (buf[i] == '\n' && (buf[i + 1] == '\n' || buf[i + 1] == '\0'))
-			if(!(ret = analyze_shape(all_pieces, tet)))
+		{
+			if (!(count_y == 4))
 				return ((int**)0);
+			count_y = 0;
+			if (count_hash == 4)
+			{
+				count_hash = 0;
+				if (shape_check(tet) != 0)
+					{
+						all_pieces[tet_count][0] = tet[0];
+						all_pieces[tet_count][1] = tet[1];
+						all_pieces[tet_count][2] = tet[2];
+						all_pieces[tet_count][3] = tet[3];
+					}
+				else
+					return ((int**)0);
+			}
+			else if (count_hash != 4)
+				return ((int**)0);
+			tet_count++;
+		}
+		i++;
 	}
 	close(open(file_name, O_RDONLY));
+
 	return (all_pieces);
  }
+
+
+int num_tet(char *file_name)
+{
+	int		ret;
+	char	buf[BUF_SIZE];
+	int i;
+	int tet_count;
+
+	ret = read(open(file_name, O_RDONLY), buf, BUF_SIZE);
+	i = 0;
+	tet_count = 0;
+	while(buf[i])
+	{
+		if (buf[i] == '\n' && (buf[i + 1] == '\n' || buf[i + 1] == '\0'))
+			tet_count++;
+		i++;
+	}
+	close(open(file_name, O_RDONLY));
+	return (tet_count);
+}
