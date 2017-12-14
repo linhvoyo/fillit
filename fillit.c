@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 11:12:14 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/13 18:50:12 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/13 23:41:00 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,63 @@ char	*generate_board(int size, char c)
 	str = ft_strnew((size * size), c);
 	return (str);
 }
+
+
+// int		piece_fit_shitty1(char *str, int *tet, int board_size)
+// {
+// 	int i;
+//
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 	//	if (str[i] == '.')
+// 			if (str[i + 1] == '.')
+// 				if (str[i + (tet[1] - tet[0]) + (board_size - 4) + 1] == '.')
+// 					if (str[i + (tet[2] - tet[1]) + (tet[1] - tet[0]) + (board_size - 4) + 1] == '.')
+// 						if (str[i + (tet[3] - tet[2]) + (tet[2] - tet[1])
+// 								+ (tet[1] - tet[0]) + (board_size - 4) + 1] == '.')
+// 							return (i + 1);
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
+
+int		piece_fit_shitty1(char *str, int *tet, int board_size)
+{
+	int i;
+
+	i = 1;
+	while (str[i])
+	{
+		if (str[i] == '.')
+				if (str[i + (tet[1] - tet[0]) + (board_size - 4)] == '.')
+					if (str[i + (tet[2] - tet[1]) + (tet[1] - tet[0]) + (board_size - 4)] == '.')
+						if (str[i + (tet[3] - tet[2]) + (tet[2] - tet[1])
+								+ (tet[1] - tet[0]) + (board_size - 4)] == '.')
+							return (i);
+		i++;
+	}
+	return (0);
+}
+
+
+
+int	fill_piece_shitty1(char *str, int *tet, char c, int board_size)
+{
+	int i;
+
+	if ((i = piece_fit_shitty1(str, tet, board_size)))
+	{
+		str[i] = c;
+		str[i + (tet[1] - tet[0]) + (board_size - 4)] = c;
+		str[i + (tet[2] - tet[1]) + (tet[1] - tet[0]) + (board_size - 4)] = c;
+		str[i + (tet[3] - tet[2]) + (tet[2] - tet[1]) + (tet[1] - tet[0]) + (board_size - 4)] = c;
+		return (1);
+	}
+	return (0);
+}
+
 
 int		piece_fit(char *str, int *tet, int board_size)
 {
@@ -87,7 +144,7 @@ void pb(char *str, int board_size)
 			printf("\n");
 	 	printf("%c", str[i]);
 		i++;
-	 } 
+	 }
 	printf("\n\n");
 }
 
@@ -107,7 +164,7 @@ int    num_dots(char *s1)
 {
 	int i;
 	int count;
-	
+
 	i = 0;
 	count = 0;
 	while (s1[i])
@@ -119,7 +176,7 @@ int    num_dots(char *s1)
 		   count++;
 		else
 			break;
-		i--;	
+		i--;
 	}
 	return (count);
 }
@@ -150,7 +207,7 @@ int	generate_combo(int **arr, int num_pieces, int board_size)
 
 	k = 0;
 
-	char *str; 
+	char *str;
 	char *res;
 
 	res = generate_board(board_size, 96);
@@ -221,7 +278,7 @@ int fill_board(char *str, int **arr, int num_pieces, int *num, int board_size)
 
 void fillit(int **arr, int num_pieces)
 {
-//	char *str;
+	char *str;
 	int i = 0;
 	while (i < num_pieces)
 	{
@@ -229,18 +286,18 @@ void fillit(int **arr, int num_pieces)
 		i++;
 	}
 
-//	str = generate_board(4, '.');
-//	print_board(str, 4);
+	str = generate_board(4, '.');
+	print_board(str, 4);
 	//if ((index = piece_fit(str, arr[0])))
-//	fill_piece(str, arr[0], 'A' + 0);
+	fill_piece_shitty1(str, arr[1], 'A' + 1, 4);
 	//if ((index = piece_fit(str, arr[1])))
-//	fill_piece(str, arr[2], 'A' + 2);
+	fill_piece_shitty1(str, arr[2], 'A' + 2, 4);
 	//if ((index = piece_fit(str, arr[2])))
 //	fill_piece(str, arr[0], 'A' + 0);
 //	fill_piece(str, arr[1], 'A' + 1);
 
-//	print_board(str, 4);
-//	pb(str, 4);
+	print_board(str, 4);
+	pb(str, 4);
 
 
 //	int board_size = 4;
@@ -259,12 +316,12 @@ void fillit(int **arr, int num_pieces)
 //	print_board(str);
 
 //	generate_combo(arr, num_pieces, 5);
-	i = 4;
-	while (i < 26)
-	{
-		if(!(generate_combo(arr, num_pieces, i)))
-				i++;
-		else
-			break ;
-	}
+//	i = 4;
+//	while (i < 26)
+//	{
+//		if(!(generate_combo(arr, num_pieces, i)))
+//				i++;
+//		else
+//			break ;
+//	}
 }

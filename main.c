@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 22:03:40 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/13 19:53:15 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/13 23:24:38 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int main(int argc, char **argv)
 		arr = read_file(argv[1], arr);
 		for(k=0; k < iters.tet_count; k = k + 1)
 			printf("%dshapes ", iters.shapes_arr[k]);
+		printf("\n");
 		if (arr == 0)
 		{
 			write(1, "error\n", 6);
