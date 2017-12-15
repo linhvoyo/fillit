@@ -57,6 +57,57 @@ int shape_check(int *tet)
 }
 
 
+// int	*shift(int *arr)
+// {
+// 	int leastdiff;
+// 	int diff;
+// 	int i;
+//
+// 	leastdiff = 4;
+// 	i = -1;
+// 	while (++i < 4)
+// 	{
+// 		diff = arr[i] -(((arr[i]/5) * 4) + 1);
+// 		if (diff < leastdiff)
+// 			leastdiff = diff;
+// 	}
+// 	i = -1;
+// 	while (++i < 4)
+// 		arr[i] = arr[i] - leastdiff - 1;
+// 	return (arr);
+// }
+
+
+int is_offset(int *tet, int shape)
+{
+	if (tet[0] == tet[1] - 3 && tet[1] == tet[2] - 1 && tet[2] == tet[3] - 4 && shape == 7)
+		return (1);
+	if (shape == 6 && tet[0] == tet[1] - 4 && tet[1] == tet[2] - 3 && tet[2] == tet[3] - 1)
+		return (1);
+	return (0);
+}
+
+
+int	shift(int *arr)
+{
+	int temp;
+	if (!(is_offset(arr, shape_check(arr))))
+	{
+		if (arr[0] == 1)
+			temp = 0;
+		else
+			temp = arr[0] - 1;
+	}
+	else
+	{
+		if (arr[0] == 2)
+			temp = 0;
+		else
+			temp = arr[0] - 2;
+	}
+	return (temp);
+}
+
 int analyze_shape(int **all_pieces, int *tet)
 {
 	if (!(iters.count_y == 4))
@@ -67,11 +118,19 @@ int analyze_shape(int **all_pieces, int *tet)
 		iters.count_hash = 0;
 		if (shape_check(tet) != 0)
 			{
-				all_pieces[iters.tet_count][0] = tet[0] - 1;
-				all_pieces[iters.tet_count][1] = tet[1] - 1;
-				all_pieces[iters.tet_count][2] = tet[2] - 1;
-				all_pieces[iters.tet_count][3] = tet[3] - 1;
+//				printf("%d %d %d %d\n", tet[0], tet[1], tet[2], tet[3]);
+				//tet = shift(tet);
+				//printf("%d %d %d %d\n", tet[0], tet[1], tet[2], tet[3]);
+				//tet = shift(tet);
 				iters.shapes_arr[iters.tet_count] = shape_check(tet);
+				all_pieces[iters.tet_count][0] = tet[0] - shift(tet) - 1;
+				all_pieces[iters.tet_count][1] = tet[1] - shift(tet) - 1;
+				all_pieces[iters.tet_count][2] = tet[2] - shift(tet) - 1;
+				all_pieces[iters.tet_count][3] = tet[3] - shift(tet) - 1;
+//				printf("%d %d %d %d\n", all_pieces[iters.tet_count][0], all_pieces[iters.tet_count][1], all_pieces[iters.tet_count][2], all_pieces[iters.tet_count][3]);
+	//			iters.shapes_arr[iters.tet_count] = shape_check(tet);
+
+				//iters.shapes_arr[iters.tet_count] = shape_check(tet);
 			}
 		else
 			return (0);

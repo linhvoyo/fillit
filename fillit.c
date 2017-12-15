@@ -144,7 +144,7 @@ int		piece_fit(char *str, int *tet, int board_size)
 
 	i = 0;
 	while (str[i])
-	{	
+	{
 		if (str[i] == '.')
 			if (str[i + dis1] == '.')
 				if (str[i + dis1 + dis2] == '.')
