@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 11:17:11 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/13 20:17:00 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/14 18:33:56 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef	struct	s_counters
 	int count_hash;
 	int tet_count;
 	int shapes_arr[26];
+	int board_length;
 }				t_counters;
 
 extern t_counters iters;
@@ -54,17 +55,26 @@ int **read_file(char *file_name, int **all_pieces);
 int num_tet(char *file_name);
 
 //fillit.c
-char    *ft_strnew(size_t size, char c);
-char    *generate_board(int num_tet, char c);
-int     piece_fit(char *str, int *tet, int board_size);
-int fill_piece(char *str, int *tet, char c, int board_size);
-void    print_board(char *str, int board_size);
-void	pb(char *str, int board_size);
-void	print_combo(int *num, int n);
-int    num_dots(char *s1);
-int		generate_combo(int **arr, int num_pieces, int board_size);
-int		fill_board(char *str, int **arr, int num_pieces, int *num, int board_size);
-void	fillit(int **arr, int num_pieces);
+//char    *ft_strnew(size_t size, char c);
+//char    *generate_board(int num_tet, char c);
+//int     piece_fit(char *str, int *tet, int board_size);
+//int fill_piece(char *str, int *tet, char c, int board_size);
+//void    print_board(char *str, int board_size);
+//void	pb(char *str, int board_size);
+//void	print_combo(int *num, int n);
+//int    num_dots(char *s1);
+//int		generate_combo(int **arr, int num_pieces, int board_size);
+//int		fill_board(char *str, int **arr, int num_pieces, int *num, int board_size);
+//void	fillit(int **arr, int num_pieces);
+
+char    *boardgen(int size, char *board, char c);
+int        check(int *tet, int startpos, char *board, int tetnum, int size);
+void print_combo(int *num, int n);
+int fill_board(char *str, int **arr, int num_pieces, int *num, int board_size);
+int    generate_combo(int **arr, int num_pieces, int board_size);
+void fillit(int **arr, int num_pieces);
+
+
 
 
 

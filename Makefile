@@ -6,7 +6,7 @@
 #    By: lilam <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/11 10:54:22 by lilam             #+#    #+#              #
-#    Updated: 2017/12/12 22:06:24 by lilam            ###   ########.fr        #
+#    Updated: 2017/12/14 18:55:18 by lilam            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = fillit
 FILES = main.c \
 		readfile.c \
 		shape_validation.c \
-		fillit.c
+		fillit4.c
 
 all:
 	@gcc -o $(NAME) -Wall -Wextra -Werror $(FILES)

@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 11:14:54 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/13 18:51:14 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/14 17:29:33 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ int analyze_shape(int **all_pieces, int *tet)
 		iters.count_hash = 0;
 		if (shape_check(tet) != 0)
 			{
-				all_pieces[iters.tet_count][0] = tet[0];
-				all_pieces[iters.tet_count][1] = tet[1];
-				all_pieces[iters.tet_count][2] = tet[2];
-				all_pieces[iters.tet_count][3] = tet[3];
+				all_pieces[iters.tet_count][0] = tet[0] - 1;
+				all_pieces[iters.tet_count][1] = tet[1] - 1;
+				all_pieces[iters.tet_count][2] = tet[2] - 1;
+				all_pieces[iters.tet_count][3] = tet[3] - 1;
 				iters.shapes_arr[iters.tet_count] = shape_check(tet);
 			}
 		else

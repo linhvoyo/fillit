@@ -6,13 +6,13 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 22:03:40 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/13 23:24:38 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/14 17:45:23 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-t_counters    iters = {0, 0, 0, 0, {0}};
+t_counters    iters = {0, 0, 0, 0, {0},0};
 
 int main(int argc, char **argv)
 {
@@ -26,11 +26,11 @@ int main(int argc, char **argv)
 		arr[j++] = malloc(sizeof(int) * 4);
 	if (argc == 2)
 	{
-		int k = 0;
+//		int k = 0;
 		arr = read_file(argv[1], arr);
-		for(k=0; k < iters.tet_count; k = k + 1)
-			printf("%dshapes ", iters.shapes_arr[k]);
-		printf("\n");
+//		for(k=0; k < iters.tet_count; k = k + 1)
+//			printf("%dshapes ", iters.shapes_arr[k]);
+//		printf("\n");
 		if (arr == 0)
 		{
 			write(1, "error\n", 6);
