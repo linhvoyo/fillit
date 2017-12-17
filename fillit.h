@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 11:17:11 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/14 18:33:56 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/16 17:14:06 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef	struct	s_counters
 }				t_counters;
 
 extern t_counters iters;
-
+extern char *g_board;
 
 //main.c
 
@@ -72,7 +72,7 @@ int        check(int *tet, int startpos, char *board, int tetnum, int size);
 void print_combo(int *num, int n);
 int fill_board(char *str, int **arr, int num_pieces, int *num, int board_size);
 int    generate_combo(int **arr, int num_pieces, int board_size);
-void fillit(int **arr, int num_pieces);
+void fillit(int **arr);
 
 
 

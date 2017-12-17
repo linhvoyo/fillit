@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 11:12:14 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/15 14:12:33 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/16 17:07:24 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int    ft_strcmp(const char *s1, const char *s2)
 
 
 
+
 //int	generate_combo(int **arr, int num_pieces, int board_size)
 int	generate_combo(int **arr, int num_pieces, int board_size)
 {
@@ -136,8 +137,8 @@ int	generate_combo(int **arr, int num_pieces, int board_size)
 	while (++i < num_pieces)
 		num[i] = i;
 
-	j = 0;
-	while (j < num_pieces)
+	j = 1;
+	while (j <= num_pieces)
 	{
 		i = 0;
 		while (i < num_pieces - 1)
@@ -155,7 +156,7 @@ int	generate_combo(int **arr, int num_pieces, int board_size)
 				if (ft_strcmp(str, res) < 0)
 					res = str;
 			//	pb(str, board_size);
-			//	printf("%s\n", str);
+			  printf("%s\n", str);
 				k = 1;
 			}
 			i++;
@@ -181,7 +182,7 @@ int fill_board(char *str, int **arr, int num_pieces, int *num, int board_size)
 	int j;
 	int count;
 
-//	print_combo(num, num_pieces);
+	print_combo(num, num_pieces);
 
 	i = 0;
 	count = 0;
@@ -197,7 +198,7 @@ int fill_board(char *str, int **arr, int num_pieces, int *num, int board_size)
 			}
 			i++;
 	}
-//	print_board(str, 4);
+	printf("%s\n", str);
 	if (count == num_pieces)
 		return (1);
 	else
@@ -205,12 +206,57 @@ int fill_board(char *str, int **arr, int num_pieces, int *num, int board_size)
 }
 
 
-
-
-
-void fillit(int **arr, int num_pieces)
+void	removetet(int *tet, char *board, int pos, int size)
 {
-	int i = 0;
+	int	i;
+
+	int *temp;
+	temp = malloc(sizeof(temp) * 4);
+	for (int j = 0; j < 4; j++)
+		temp[j] = tet[j];
+	i = -1;
+	while (++i < 4)
+	{
+		if (temp[i] >= 4)
+			temp[i] = temp[i] + (temp[i] / 4) * (size - 3);
+	}
+	i = -1;
+	while (++i < 4)
+		board[pos + temp[i]] = '.';
+
+}
+
+
+
+
+int		backtrack(int **pieces, char *board, int tetnum, int size)
+{
+	//printf("%s", board);
+	int pos;
+
+	if (tetnum == iters.tet_count)
+	{
+		g_board = board;
+		return (0);
+	}
+	pos = 0;
+	while (board[pos] != '\0')
+	{
+		if (check(pieces[tetnum], pos, board, tetnum, size) != 0)
+		{
+			if (!backtrack(pieces, board, tetnum + 1, size))
+				return (0);
+			removetet(pieces[tetnum], board, pos, size);
+		}
+		pos++;
+	}
+	return (1);
+}
+
+
+void fillit(int **arr)
+{
+//	int i = 0;
 
 
 	// arr[0][0] = 1;
@@ -222,20 +268,32 @@ void fillit(int **arr, int num_pieces)
 	// arr[1][1] = 4;
 	// arr[1][2] = 5;
 	// arr[1][3] = 9;
+	// char *str;
+	// int board_size = 4;
+	// while (i < num_pieces)
+	// {
+	//  	printf("%d %d %d %d \n", arr[i][0], arr[i][1], arr[i][2], arr[i][3]);
+	//  	i++;
+	//  }
 
-//	char *str;
-//	int board_size = 4;
-	while (i < num_pieces)
+	char *board;
+	int board_size = 4;
+	board = boardgen(board_size, NULL, '.');
+	g_board = 0;
+
+	backtrack(arr, board, 0, 4);
+	printf("%s", g_board);
+
+	board_size = 1;
+	while (board_size < 26)
 	{
-	 	printf("%d %d %d %d \n", arr[i][0], arr[i][1], arr[i][2], arr[i][3]);
-	 	i++;
-	 }
+		if (!(backtrack(arr, board, 0, board_size)))
+			board_size++;
+		else
+			break;
+	}
 
 
-//	char *board;
-//	int board_size = 4;
-//	board = boardgen(board_size, NULL, '.');
-//	printf("%s\n",  board);
 //	check(arr[0], 0, board, 0, board_size);
 //	 printf("%s\n",  board);
 //	int j = 0;
@@ -283,12 +341,12 @@ void fillit(int **arr, int num_pieces)
 
 
 //	generate_combo(pieces, num_pieces, 5);
-	 i = 4;
-	 while (i < 26)
-	 {
-	 	if(!(generate_combo(arr, num_pieces, i)))
-	 			i++;
-	 	else
-	 		break ;
-	 }
+	//  i = 4;
+	//  while (i < 26)
+	//  {
+	//  	if(!(generate_combo(arr, iters.tet_count, i)))
+	//  			i++;
+	//  	else
+	//  		break ;
+	//  }
 }

@@ -82,6 +82,8 @@ int is_offset(int *tet, int shape)
 {
 	if (tet[0] == tet[1] - 3 && tet[1] == tet[2] - 1 && tet[2] == tet[3] - 4 && shape == 7)
 		return (1);
+	if (tet[0] == tet[1] - 1 && tet[1] == tet[2] - 2 && tet[2] == tet[3] - 1 && shape == 4)
+	 	return (1);
 	if (shape == 6 && tet[0] == tet[1] - 4 && tet[1] == tet[2] - 3 && tet[2] == tet[3] - 1)
 		return (1);
 	return (0);

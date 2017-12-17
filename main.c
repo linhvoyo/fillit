@@ -6,13 +6,14 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 22:03:40 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/14 17:45:23 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/16 17:15:18 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
 t_counters    iters = {0, 0, 0, 0, {0},0};
+char *g_board;
 
 int main(int argc, char **argv)
 {
@@ -37,7 +38,7 @@ int main(int argc, char **argv)
 			return(0);
 		}
 //		fillit(arr, num_tet(argv[1]));
-		fillit(arr, iters.tet_count);
+		fillit(arr);
 	}
 	else
 	{
