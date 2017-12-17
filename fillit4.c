@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 11:12:14 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/16 17:07:24 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/17 13:47:10 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,42 +256,19 @@ int		backtrack(int **pieces, char *board, int tetnum, int size)
 
 void fillit(int **arr)
 {
-//	int i = 0;
+	int		size;
+	char	*board;
 
-
-	// arr[0][0] = 1;
-	// arr[0][1] = 4;
-	// arr[0][2] = 5;
-	// arr[0][3] = 9;
-	//
-	// arr[1][0] = 1;
-	// arr[1][1] = 4;
-	// arr[1][2] = 5;
-	// arr[1][3] = 9;
-	// char *str;
-	// int board_size = 4;
-	// while (i < num_pieces)
-	// {
-	//  	printf("%d %d %d %d \n", arr[i][0], arr[i][1], arr[i][2], arr[i][3]);
-	//  	i++;
-	//  }
-
-	char *board;
-	int board_size = 4;
-	board = boardgen(board_size, NULL, '.');
-	g_board = 0;
-
-	backtrack(arr, board, 0, 4);
-	printf("%s", g_board);
-
-	board_size = 1;
-	while (board_size < 26)
+	size = 2;
+	board = malloc(sizeof(board) * 2);
+	while (g_board == NULL)
 	{
-		if (!(backtrack(arr, board, 0, board_size)))
-			board_size++;
-		else
-			break;
+		board = boardgen(size, board, '.');
+		backtrack(arr, board, 0, size);
+		size++;
 	}
+	printf("%s", g_board);
+}
 
 
 //	check(arr[0], 0, board, 0, board_size);
@@ -349,4 +326,3 @@ void fillit(int **arr)
 	//  	else
 	//  		break ;
 	//  }
-}
