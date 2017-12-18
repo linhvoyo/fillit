@@ -6,7 +6,7 @@
 #    By: lilam <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/11 10:54:22 by lilam             #+#    #+#              #
-#    Updated: 2017/12/14 18:55:18 by lilam            ###   ########.fr        #
+#    Updated: 2017/12/17 16:38:30 by lilam            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,16 @@ NAME = fillit
 FILES = main.c \
 		readfile.c \
 		shape_validation.c \
-		fillit4.c
+		fillit.c
 
-all:
+$(NAME):
+	@gcc -c -Wall -Wextra -Werror $(FILES)
 	@gcc -o $(NAME) -Wall -Wextra -Werror $(FILES)
 
+all: $(NAME)
+
 clean:
-	@rm -rf ft*.o
+	@rm -rf *.o
 
 fclean: clean
 	@rm -rf $(NAME)
