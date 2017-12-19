@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 11:12:14 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/17 13:47:10 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/17 22:10:37 by linh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int	generate_combo(int **arr, int num_pieces, int board_size)
 				if (ft_strcmp(str, res) < 0)
 					res = str;
 			//	pb(str, board_size);
-			  printf("%s\n", str);
+//			  printf("%s\n", str);
 				k = 1;
 			}
 			i++;
@@ -167,7 +167,7 @@ int	generate_combo(int **arr, int num_pieces, int board_size)
 //	pb(res, board_size);
 	if (k == 1)
 	{
-		printf("%s", res);
+//		printf("%s", res);
 		//pb(res, board_size);
 		return (1);
 	}
@@ -267,7 +267,7 @@ void fillit(int **arr)
 		backtrack(arr, board, 0, size);
 		size++;
 	}
-	printf("%s", g_board);
+//	printf("%s", g_board);
 }
 
 

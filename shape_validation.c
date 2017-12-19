@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 10:44:47 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/17 16:08:52 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/19 00:44:56 by linh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	line_shape(int *tet)
 	int i;
 
 	i = 0;
+	if (!(tet[1] - tet[0] == 1 || tet[1] - tet[0] == 4))
+		return (0);
 	while (tet[i] && i < 3)
 	{
 		if (!((tet[i] == tet[i + 1] - (tet[2] - tet[1]))))
@@ -40,7 +42,8 @@ int	z_shape(int *tet)
 		if ((tet[1] - tet[0] == 3 && tet[2] - tet[1] == 1)
 				|| (tet[1] - tet[0] == 1 && tet[2] - tet[1] == 4))
 			return (1);
-		else
+		else if ((tet[1] - tet[0] == 1 && tet[2] - tet[1] == 2)
+				|| (tet[1] - tet[0] == 4 && tet[2] - tet[1] == 1))
 			return (2);
 	}
 	return (0);
