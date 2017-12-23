@@ -6,11 +6,12 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 22:03:40 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/17 16:22:00 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/22 23:13:23 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include <stdio.h>
 
 t_counters	g_iters = {0, 0, 0, 0, {0}, 0};
 char		*g_board;
@@ -26,16 +27,16 @@ void		ft_putstr(char *str)
 		ft_putchar(*str++);
 }
 
-int			**read_file(char *file_name, int **all_pieces)
+int			read_file(int **all_pieces, int fd)
 {
 	FILE_VARS;
-	if (!(ret = read(open(file_name, O_RDONLY), buf, 4096)))
-		return ((int**)0);
-	while (buf[++i])
+	ret = read(fd, buf, 4096);
+	buf[ret] = '\0';
+	while (++i < ret)
 	{
 		if (!(buf[i] == '.' || buf[i] == '#' || buf[i] == '\n'))
-			return ((int**)0);
-		while (buf[i] == '.' || buf[i] == '#')
+			return (0);
+		while (i < ret && (buf[i] == '.' || buf[i] == '#'))
 		{
 			if (buf[i] == '#')
 				analyze_x(tet, i);
@@ -46,19 +47,20 @@ int			**read_file(char *file_name, int **all_pieces)
 			RESET_X_ADD_Y;
 		}
 		else if ((g_iters.count_x != 0))
-			return ((int**)0);
+			return (0);
 		if (buf[i] == '\n' && (buf[i + 1] == '\n' || buf[i + 1] == '\0'))
-			if (!(ret = analyze_shape(all_pieces, tet)))
-				return ((int**)0);
+			if (!(analyze_shape(all_pieces, tet)))
+				return (0);
 	}
-	close(open(file_name, O_RDONLY));
-	return (all_pieces);
+	close(fd);
+	return (1);
 }
 
 int			main(int argc, char **argv)
 {
 	int **arr;
 	int j;
+	int fd;
 
 	arr = malloc(sizeof(**arr) * 26);
 	j = 0;
@@ -66,10 +68,9 @@ int			main(int argc, char **argv)
 		arr[j++] = malloc(sizeof(int) * 4);
 	if (argc == 2)
 	{
-		if (!(open(argv[1], O_RDONLY)))
+		if (!(fd = open(argv[1], O_RDONLY)))
 			return (0);
-		arr = read_file(argv[1], arr);
-		if (arr == 0)
+		if (!read_file(arr, fd))
 		{
 			write(1, "error\n", 6);
 			return (0);
