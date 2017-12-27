@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 11:17:11 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/22 23:11:25 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/26 16:39:57 by linh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ extern			char *g_board;
 void			ft_putchar(char c);
 void			ft_putstr(char *str);
 int				read_file(int **all_pieces, int fd);
+int				is_edge(int *tet);
 
 int				line_shape(int *tet);
 int				square_shape(int *tet);

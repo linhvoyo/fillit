@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 22:03:40 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/22 23:13:23 by lilam            ###   ########.fr       */
+/*   Updated: 2017/12/26 16:54:57 by linh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,26 @@
 t_counters	g_iters = {0, 0, 0, 0, {0}, 0};
 char		*g_board;
 
-void		ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
 void		ft_putstr(char *str)
 {
-	while (*str)
-		ft_putchar(*str++);
+	int i;
+
+	i = 0;
+	while (str[i])
+		write(1, &str[i++], 1);
+}
+
+int			is_edge(int *tet)
+{
+//		printf("%d %d %d %d \n", tet[0], tet[1], tet[2], tet[3]);
+//		printf("%d %d\n", tet[2] - tet[1], tet[1]);
+		if (tet[1] - tet[0] == 1 && tet[0] % 4 == 0)
+				return (1);
+		if (tet[2] - tet[1] == 1 && tet[1] % 4 == 0)
+			   	return (1);
+		if (tet[3] - tet[2] == 1 && tet[2] % 4 == 0)
+				return (1);
+		return (0);	
 }
 
 int			read_file(int **all_pieces, int fd)
@@ -32,6 +43,8 @@ int			read_file(int **all_pieces, int fd)
 	FILE_VARS;
 	ret = read(fd, buf, 4096);
 	buf[ret] = '\0';
+	if (!ret)
+		return (0);
 	while (++i < ret)
 	{
 		if (!(buf[i] == '.' || buf[i] == '#' || buf[i] == '\n'))
@@ -70,7 +83,7 @@ int			main(int argc, char **argv)
 	{
 		if (!(fd = open(argv[1], O_RDONLY)))
 			return (0);
-		if (!read_file(arr, fd))
+		if (!(read_file(arr, fd)))
 		{
 			write(1, "error\n", 6);
 			return (0);
