@@ -6,12 +6,11 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 11:14:54 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/26 16:48:27 by linh             ###   ########.fr       */
+/*   Updated: 2017/12/27 17:36:37 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h>
 
 int		shape_check(int *tet)
 {
@@ -99,7 +98,6 @@ int		analyze_shape(int **all_pieces, int *tet)
 	g_iters.count_y = 0;
 	if (g_iters.count_hash == 4)
 	{
-//		printf("%d\n", shape_check(tet));
 		g_iters.count_hash = 0;
 		if (shape_check(tet) != 0)
 		{

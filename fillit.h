@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 11:17:11 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/26 16:39:57 by linh             ###   ########.fr       */
+/*   Updated: 2017/12/27 17:37:17 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
-# define FILE_VARS int ret; char buf[4096]; int tet[4]; int i = -1;
-# define RESET_X_ADD_Y g_iters.count_x = 0; g_iters.count_y++;
+# define FILE_VARS char buf[4096]; int tet[4]; int i = -1;
+# define READ_FILE int ret = read(fd, buf, 4096); buf[ret] = '\0'
 # define ADD_X_ADD_I g_iters.count_x++; i++;
 
 typedef	struct	s_counters
@@ -34,7 +34,6 @@ typedef	struct	s_counters
 extern			t_counters g_iters;
 extern			char *g_board;
 
-void			ft_putchar(char c);
 void			ft_putstr(char *str);
 int				read_file(int **all_pieces, int fd);
 int				is_edge(int *tet);

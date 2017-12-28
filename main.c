@@ -6,7 +6,7 @@
 /*   By: lilam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 22:03:40 by lilam             #+#    #+#             */
-/*   Updated: 2017/12/26 16:54:57 by linh             ###   ########.fr       */
+/*   Updated: 2017/12/27 17:34:20 by lilam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,19 @@ void		ft_putstr(char *str)
 
 int			is_edge(int *tet)
 {
-//		printf("%d %d %d %d \n", tet[0], tet[1], tet[2], tet[3]);
-//		printf("%d %d\n", tet[2] - tet[1], tet[1]);
-		if (tet[1] - tet[0] == 1 && tet[0] % 4 == 0)
-				return (1);
-		if (tet[2] - tet[1] == 1 && tet[1] % 4 == 0)
-			   	return (1);
-		if (tet[3] - tet[2] == 1 && tet[2] % 4 == 0)
-				return (1);
-		return (0);	
+	if (tet[1] - tet[0] == 1 && tet[0] % 4 == 0)
+		return (1);
+	if (tet[2] - tet[1] == 1 && tet[1] % 4 == 0)
+		return (1);
+	if (tet[3] - tet[2] == 1 && tet[2] % 4 == 0)
+		return (1);
+	return (0);
 }
 
 int			read_file(int **all_pieces, int fd)
 {
 	FILE_VARS;
-	ret = read(fd, buf, 4096);
-	buf[ret] = '\0';
+	READ_FILE;
 	if (!ret)
 		return (0);
 	while (++i < ret)
@@ -55,10 +52,9 @@ int			read_file(int **all_pieces, int fd)
 				analyze_x(tet, i);
 			ADD_X_ADD_I;
 		}
-		if (g_iters.count_x == 4)
-		{
-			RESET_X_ADD_Y;
-		}
+		if (g_iters.count_x == 4 && !(g_iters.count_x = 0) &&
+				(g_iters.count_y++))
+			;
 		else if ((g_iters.count_x != 0))
 			return (0);
 		if (buf[i] == '\n' && (buf[i + 1] == '\n' || buf[i + 1] == '\0'))
